@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: foro-forja-nova
+    runtime: python
+    buildCommand: ""
+    startCommand: python foro_forja_nova_api.py
+    envVars:
+      - key: PORT
+        value: 10000
+    plan: free
