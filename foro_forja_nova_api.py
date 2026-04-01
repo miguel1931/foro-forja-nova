@@ -20,7 +20,7 @@ import html
 import re
 import threading
 from pathlib import Path
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler, ThreadingHTTPServer
 from datetime import datetime
 from urllib.parse import urlparse, parse_qs
 
@@ -329,7 +329,7 @@ def main():
     print("Ctrl+C per aturar el servidor")
     print()
 
-    server = HTTPServer(('0.0.0.0', PORT), ForumHandler)
+    server = ThreadingHTTPServer(('0.0.0.0', PORT), ForumHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
