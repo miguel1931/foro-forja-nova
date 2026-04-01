@@ -41,7 +41,7 @@ data_lock = threading.Lock()
 
 def load_data():
     """Carrega les dades del fòrum des del JSON."""
-    with open(DATA_JSON, 'r', encoding='utf-8') as f:
+    with open(DATA_JSON, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
 
