@@ -18,11 +18,17 @@ import json
 import os
 import html
 import re
+import sys
 import threading
+import socketserver
 from pathlib import Path
-from http.server import HTTPServer, BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from datetime import datetime
 from urllib.parse import urlparse, parse_qs
+
+# ThreadingHTTPServer compatible amb totes les versions de Python
+class ThreadedHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
+    daemon_threads = True
 
 # Rutes
 DATA_JSON = Path(__file__).parent / "foro_forja_nova_data.json"
@@ -329,7 +335,8 @@ def main():
     print("Ctrl+C per aturar el servidor")
     print()
 
-    server = ThreadingHTTPServer(('0.0.0.0', PORT), ForumHandler)
+    sys.stdout.flush()
+    server = ThreadedHTTPServer(('0.0.0.0', PORT), ForumHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
